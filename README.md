@@ -16,3 +16,6 @@ Runs all unit tests
 
 ### ./integration-test.sh
 Runs all integration tests
+
+### ./run.sh
+Builds and runs the server
