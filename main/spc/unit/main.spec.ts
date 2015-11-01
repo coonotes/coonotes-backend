@@ -10,7 +10,7 @@ import chai = require('chai');
  * Globals
  */
 
-const expect = chai.expect;
+var expect = chai.expect;
 
 /**
  * Unit tests

@@ -33,3 +33,9 @@ node_modules
 # Typescript internal files
 typings
 tmp
+dist
+build
+
+# Gobble Files
+.gobble-build
+.gobble
