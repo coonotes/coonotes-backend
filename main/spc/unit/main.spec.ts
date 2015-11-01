@@ -16,7 +16,6 @@ var expect = chai.expect;
  * Unit tests
  */
 describe('User Model Unit Tests:', () => {
-
     describe('2 + 4', () => {
         it('should be 6', () => {
             expect(2+4).to.equals(6);
@@ -25,5 +24,15 @@ describe('User Model Unit Tests:', () => {
         it('should not be 7', () => {
             expect(2+4).to.not.equals(7);
         });
+
+        it('should be 4', async (done) => {
+            async function foo() {
+                return 4;
+            }
+
+            var x = await foo();
+            expect(x).to.equal(4);
+            done();
+        })
     });
 });

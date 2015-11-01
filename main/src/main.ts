@@ -1,3 +1,3 @@
-function foo() {
+async function foo() {
 
 }
