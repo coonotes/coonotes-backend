@@ -28,3 +28,8 @@ node_modules
 
 # IDE support directories and files
 .idea
+*.iml
+
+# Typescript internal files
+typings
+tmp
