@@ -1,0 +1,19 @@
+{
+  "name": "coonotes-backend",
+  "version": "0.0.0",
+  "description": "Backend for the application of cooperative notes (much original name)",
+  "main": "src/main.ts",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmruiz/coonotes-backend.git"
+  },
+  "author": "Mates of Pigs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kmruiz/coonotes-backend/issues"
+  },
+  "homepage": "https://github.com/kmruiz/coonotes-backend#readme"
+}
