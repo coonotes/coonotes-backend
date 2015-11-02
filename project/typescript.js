@@ -15,7 +15,7 @@ module.exports = function (module) {
                 out: "build/dist/" + module + ".js"
             }),
 
-            gobble(module + '/spc/').transform('typescript', {
+            gobble(module).transform('typescript', {
                 noImplicitAny: false,
                 sourceMap: true,
                 declaration: false,
