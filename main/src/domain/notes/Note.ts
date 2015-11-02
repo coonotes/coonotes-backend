@@ -1,4 +1,6 @@
 /// <reference path="../../../../typings/node-uuid/node-uuid.d.ts" />
+"use strict";
+
 import uuid = require('node-uuid');
 
 export interface NoteCreator {
