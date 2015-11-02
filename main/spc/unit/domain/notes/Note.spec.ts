@@ -13,10 +13,8 @@ describe('Note', () => {
             { id: null, owner: 'someOwner', title: null, body: null, collaborators: [], permalink: null },
         ].forEach((test) => {
             // region preconditions
-            const whenIHaveAnInvalidNote = () => {
-                return () => {
-                    Note.CreateNote(test.id, test.owner, test.title, test.body, test.collaborators, test.permalink);
-                };
+            const givenAnInvalidNote = (cb) => {
+                cb(() => Note.CreateNote(test.id, test.owner, test.title, test.body, test.collaborators, test.permalink))
             };
             // endregion
             // region cases
@@ -27,8 +25,9 @@ describe('Note', () => {
 
             describe(JSON.stringify(test), () => {
                 it('should throw an error', () => {
-                    const note = whenIHaveAnInvalidNote();
-                    thenItShouldThrowAnException(note);
+                    givenAnInvalidNote(
+                        thenItShouldThrowAnException
+                    );
                 });
             })
         });
