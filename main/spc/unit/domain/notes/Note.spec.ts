@@ -29,7 +29,28 @@ describe('Note', () => {
                         thenItShouldThrowAnException
                     );
                 });
-            })
+            });
+        });
+    });
+
+    describe("id", () => {
+        // region exercises
+        const exerciseRandomNote = () => Note.CreateNewNote('owner', 'title', 'body');
+        // endregion
+        // region preconditions
+        const givenTwoNotes = (cb) => {
+            cb(exerciseRandomNote(), exerciseRandomNote());
+        };
+        // endregion
+
+        // region cases
+        const thenTheyShouldContainDifferentIds = (a, b) => expect(a.dto().id).to.not.equal(b.dto.id);
+        // endregion
+
+        it("should not have any object the same id", () => {
+            givenTwoNotes(
+                thenTheyShouldContainDifferentIds
+            );
         });
     });
 });
