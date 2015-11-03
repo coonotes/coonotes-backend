@@ -11,9 +11,14 @@ describe('Note', () => {
     const PredefinedUser = 'someone';
     const Owner = 'owner';
     const SomeNoteName = 'someNewTitle';
+    const SomeNoteBody = 'SomeBodyToLove';
     // endregion
     // region exercises
     const exerciseRandomNote = () => Note.CreateNewNote(Owner, 'title', 'body');
+    // endregion
+    // region preconditions
+    const givenSomeNote = (cb) => cb(exerciseRandomNote());
+    const givenASharedNoteTo = (toUser, cb) => cb(exerciseRandomNote().share(toUser));
     // endregion
 
     describe('constraints', () => {
@@ -60,26 +65,18 @@ describe('Note', () => {
     });
 
     describe("DTO", () => {
-        // region preconditions
-        const givenAPredefinedNote = (cb) => cb(exerciseRandomNote());
-        // endregion
         // region assertions
-        const thenTheDtoShouldMatch = (dto) => {
-            return (note) => expect(note.dto()).to.contain(dto);
-        };
+        const thenTheDtoShouldMatch = (dto) => (note) => expect(note.dto()).to.contain(dto);
         // endregion
 
         it('should be consistent on a new note', () => {
-            givenAPredefinedNote(
+            givenSomeNote(
                 thenTheDtoShouldMatch({ title: 'title', owner: 'owner', body: 'body' })
             )
         });
     });
 
     describe("renaming a note", () => {
-        // region preconditions
-        const givenSomeNote = (cb) => cb(exerciseRandomNote());
-        // endregion
         // region steps
         const whenRenamingTo = (newName, cb) => (note) => cb(note.rename(newName));
         // endregion
@@ -95,10 +92,24 @@ describe('Note', () => {
         });
     });
 
-    describe("sharing a note", () => {
-        // region preconditions
-        const givenASharedNoteTo = (toUser, cb) => cb(exerciseRandomNote().share(toUser));
+    describe('updating a note', () => {
+        // region steps
+        const whenUpdatingTheBodyTo = (newBody, cb) => (note) => cb(note.update(newBody));
         // endregion
+        // region assertions
+        const thenTheBodyShouldBe = (body) => (note) => expect(note.dto().body).to.equal(body);
+        // endregion
+
+        it('should contain the new body', () => {
+            givenSomeNote(
+                whenUpdatingTheBodyTo(SomeNoteBody,
+                    thenTheBodyShouldBe(SomeNoteBody)
+                )
+            );
+        });
+    });
+
+    describe("sharing a note", () => {
         // region steps
         const whenSharingTheNoteTo = (toUser, cb) => (note) => cb(note.share(toUser));
         // endregion
@@ -140,6 +151,26 @@ describe('Note', () => {
                     thenItShouldNotContainTheCollaborator(Owner)
                 )
             );
+        });
+    });
+
+    describe("transfering the note ownership", () => {
+        // region steps
+        const whenTransferingTheNoteTo = (user, cb) => (note) => cb(note.transfer(user));
+        // endregion
+        // region assertions
+        const thenTheCollaboratorAndTheOwnerMustSwap = (newOwner, newColl) => (note) => {
+            const dto = note.dto();
+            expect(dto.owner).to.equal(newOwner);
+            expect(dto.collaborators).to.contain(newColl);
+        };
+        // endregion
+        it('should swap the collaborator and the new owner', () => {
+            givenASharedNoteTo(PredefinedUser,
+                whenTransferingTheNoteTo(PredefinedUser,
+                    thenTheCollaboratorAndTheOwnerMustSwap(PredefinedUser, Owner)
+                )
+            )
         });
     });
 });

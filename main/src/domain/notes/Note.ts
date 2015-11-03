@@ -60,7 +60,7 @@ class DefaultNote implements Note {
     }
 
     transfer(user: string): Note {
-        return new DefaultNote(this.id, user, this.title, this.body, this.collaborators.filter(u => u != user), this.permalink);
+        return new DefaultNote(this.id, user, this.title, this.body, this.collaborators.filter(u => u != user).concat(this.owner), this.permalink);
     }
 }
 
