@@ -52,7 +52,7 @@ describe('Note', () => {
         const thenTheyShouldContainDifferentIds = (a, b) => expect(a.dto().id).to.not.equal(b.dto().id);
         // endregion
 
-        it("two objects should not have the same id", () => {
+        it("two notes should not have the same id", () => {
             givenTwoNotes(
                 thenTheyShouldContainDifferentIds
             );
