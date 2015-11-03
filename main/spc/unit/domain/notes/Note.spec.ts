@@ -44,7 +44,7 @@ describe('Note', () => {
         // endregion
 
         // region cases
-        const thenTheyShouldContainDifferentIds = (a, b) => expect(a.dto().id).to.not.equal(b.dto.id);
+        const thenTheyShouldContainDifferentIds = (a, b) => expect(a.dto().id).to.not.equal(b.dto().id);
         // endregion
 
         it("should not have any object the same id", () => {
