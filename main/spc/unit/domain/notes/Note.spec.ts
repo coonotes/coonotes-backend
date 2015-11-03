@@ -21,8 +21,8 @@ describe('Note', () => {
             { id: null, owner: null, title: 'someTitle', body: null, collaborators: [], permalink: null },
             { id: null, owner: 'someOwner', title: null, body: null, collaborators: [], permalink: null },
         ].forEach((test) => {
-            // region preconditions
-            const givenAnInvalidNote = (cb) => {
+            // region steps
+            const whenTryingToBuildAnInvalidNote = (cb) => {
                 cb(() => Note.CreateNote(test.id, test.owner, test.title, test.body, test.collaborators, test.permalink))
             };
             // endregion
@@ -34,7 +34,7 @@ describe('Note', () => {
 
             describe(JSON.stringify(test), () => {
                 it('should throw an error', () => {
-                    givenAnInvalidNote(
+                    whenTryingToBuildAnInvalidNote(
                         thenItShouldThrowAnException
                     );
                 });
@@ -48,7 +48,6 @@ describe('Note', () => {
             cb(exerciseRandomNote(), exerciseRandomNote());
         };
         // endregion
-
         // region cases
         const thenTheyShouldContainDifferentIds = (a, b) => expect(a.dto().id).to.not.equal(b.dto().id);
         // endregion
@@ -118,7 +117,7 @@ describe('Note', () => {
         it('should contain a new collaborator', () => {
             givenASharedNoteTo(PredefinedUser,
                 thenItShouldContainTheCollaboratorOnce(PredefinedUser)
-            )
+            );
         });
 
         it('should contain a permalink', () => {
@@ -142,5 +141,5 @@ describe('Note', () => {
                 )
             );
         });
-    })
+    });
 });
