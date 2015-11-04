@@ -5,17 +5,17 @@ Backend for the application of cooperative notes (much original name)
 
 List of useful commands for development
 
-### ./clean.sh
+### ./project/scripts/clean.sh
 Removes all temporal directories
 
-### ./dependencies.sh
+### ./project/scripts/dependencies.sh
 Install all npm and tsd dependencies and typings
 
-### ./unit-test.sh
+### ./project/scripts/unit-test.sh or npm test
 Runs all unit tests
 
-### ./integration-test.sh
+### ./project/scripts/integration-test.sh
 Runs all integration tests
 
-### ./run.sh
+### ./project/scripts/run.sh or npm run
 Builds and runs the server
