@@ -1,17 +1,17 @@
 /// <reference path="../../../typings/tsd.d.ts" />
+"use strict";
 
 import {MongoClient, Db, Collection} from "mongodb";
-"use strict";
 
 export abstract class Repository {
     protected abstract collection(name: string): Collection;
 }
 
 export class SharedConnectionRepository extends Repository {
-    private static sharedConnection: Db;
+    private static sharedConnection: Db = null;
 
-    public static initialize(host?: string, port?: string, database?: string, callback?: () => void): void {
-        if (SharedConnectionRepository.sharedConnection == null) {
+    public static initialize(host?: string, port?: string, database?: string, callback?: (err?: Error) => void): void {
+        if (SharedConnectionRepository.sharedConnection != null) {
             return callback();
         }
 
@@ -22,12 +22,23 @@ export class SharedConnectionRepository extends Repository {
 
         MongoClient.connect(connectionUri, (err, db) => {
             if (err) {
-                throw new Error("[FATAL] Could not connect to database: " + connectionUri);
+                return callback(new Error("[FATAL] Could not connect to database: " + connectionUri + ", error: " + err));
             }
 
             SharedConnectionRepository.sharedConnection = db;
             callback();
         });
+    }
+
+    public static close(cb: () => void): void {
+        if (SharedConnectionRepository.sharedConnection != null) {
+            SharedConnectionRepository.sharedConnection.close(true, (err, _) => {
+                SharedConnectionRepository.sharedConnection = null;
+                cb();
+            });
+        } else {
+            cb();
+        }
     }
 
     protected collection(name: string): Collection {
