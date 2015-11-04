@@ -4,7 +4,7 @@
 import uuid = require('node-uuid');
 
 export interface NoteCreator {
-    createNote(): Note
+    createNote(title: string, body: string): Note
 }
 
 export interface Note {
