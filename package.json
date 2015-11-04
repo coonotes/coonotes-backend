@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "express": "^4.13.3",
+    "mongodb": "^2.0.47",
     "node-uuid": "^1.4.3"
   }
 }

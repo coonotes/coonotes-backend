@@ -6,24 +6,19 @@ module.exports = function (module) {
             gobble(module + '/src/').transform('typescript', {
                 noImplicitAny: false,
                 sourceMap: true,
-                declaration: false,
                 target: ts.ScriptTarget.ES6,
                 module: ts.ModuleKind.CommonJS,
                 removeComments: true,
-                typescript: ts,
-                listFiles: true,
-                out: "build/dist/" + module + ".js"
+                typescript: ts
             }),
 
             gobble(module).transform('typescript', {
                 noImplicitAny: false,
                 sourceMap: true,
-                declaration: false,
                 target: ts.ScriptTarget.ES6,
                 module: ts.ModuleKind.CommonJS,
                 removeComments: false,
-                typescript: ts,
-                listFiles: true
+                typescript: ts
             })
         ]);
 };

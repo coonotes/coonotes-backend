@@ -1,4 +1,4 @@
-/// <reference path="../../../../typings/node-uuid/node-uuid.d.ts" />
+/// <reference path="../../../../typings/tsd.d.ts" />
 "use strict";
 
 import uuid = require('node-uuid');

@@ -1,10 +1,9 @@
-/// <reference path="../../../../../typings/mocha/mocha.d.ts" />
-/// <reference path="../../../../../typings/chai/chai.d.ts" />
+/// <reference path="../../../../../typings/tsd.d.ts" />
 
-import chai = require('chai');
-import Note = require('../../../../src/domain/notes/Note');
+import * as chai from 'chai';
+import {Note, CreateNewNote, CreateNote} from '../../../../src/domain/notes/Note';
 
-var expect = chai.expect;
+const expect = chai.expect;
 
 describe('Note', () => {
     // region constants
@@ -14,7 +13,7 @@ describe('Note', () => {
     const SomeNoteBody = 'SomeBodyToLove';
     // endregion
     // region exercises
-    const exerciseRandomNote = () => Note.CreateNewNote(Owner, 'title', 'body');
+    const exerciseRandomNote = () => CreateNewNote(Owner, 'title', 'body');
     // endregion
     // region preconditions
     const givenSomeNote = (cb) => cb(exerciseRandomNote());
@@ -28,7 +27,7 @@ describe('Note', () => {
         ].forEach((test) => {
             // region steps
             const whenTryingToBuildAnInvalidNote = (cb) => {
-                cb(() => Note.CreateNote(test.id, test.owner, test.title, test.body, test.collaborators, test.permalink))
+                cb(() => CreateNote(test.id, test.owner, test.title, test.body, test.collaborators, test.permalink))
             };
             // endregion
             // region cases

@@ -31,6 +31,9 @@
     },
     "node-uuid/node-uuid-cjs.d.ts": {
       "commit": "0dd29bf8253536ae24e61c109524e924ea510046"
+    },
+    "mongodb/mongodb.d.ts": {
+      "commit": "001ca36ba58cef903c4c063555afb07bbc36bb58"
     }
   }
 }

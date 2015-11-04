@@ -1,8 +1,7 @@
-/// <reference path="../../../typings/mocha/mocha.d.ts" />
-/// <reference path="../../../typings/chai/chai.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 
-import chai = require('chai');
-var expect = chai.expect;
+import * as chai from 'chai';
+const expect = chai.expect;
 
 describe('Sanity', () => {
     it('true should be true', () => {
