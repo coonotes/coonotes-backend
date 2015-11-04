@@ -8,18 +8,18 @@ const expect = chai.expect;
 
 describe("Repository", () => {
     // region preconditions
-    const givenAMongoConnection = (cb) => SharedConnectionRepository.initialize(undefined, undefined, undefined, cb);
-    const givenAnInvalidMongoConnection = (cb) => SharedConnectionRepository.initialize('icannotconnecthere', '80', 'errorplx', cb);
+    const givenAMongoConnection = (cb) => SharedConnectionRepository.connect(undefined, undefined, undefined, cb);
+    const givenAnInvalidMongoConnection = (cb) => SharedConnectionRepository.connect('icannotconnecthere', '80', 'errorplx', cb);
     // endregion
     // region assertions
     const thenItShouldNotThrowAnException = (done) => (err) => {
         expect(err).to.equal(undefined);
-        SharedConnectionRepository.close(done);
+        SharedConnectionRepository.disconnect(done);
     };
 
     const thenItShouldThrowAnException = (done) => (err) => {
         expect(err).to.not.equal(undefined);
-        SharedConnectionRepository.close(done);
+        SharedConnectionRepository.disconnect(done);
     };
     // endregion
 

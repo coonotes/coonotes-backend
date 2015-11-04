@@ -10,7 +10,7 @@ export abstract class Repository {
 export class SharedConnectionRepository extends Repository {
     private static sharedConnection: Db = null;
 
-    public static initialize(host?: string, port?: string, database?: string, callback?: (err?: Error) => void): void {
+    public static connect(host?: string, port?: string, database?: string, callback?: (err?: Error) => void): void {
         if (SharedConnectionRepository.sharedConnection != null) {
             return callback();
         }
@@ -30,7 +30,7 @@ export class SharedConnectionRepository extends Repository {
         });
     }
 
-    public static close(cb: () => void): void {
+    public static disconnect(cb: () => void): void {
         if (SharedConnectionRepository.sharedConnection != null) {
             SharedConnectionRepository.sharedConnection.close(true, (err, _) => {
                 SharedConnectionRepository.sharedConnection = null;
