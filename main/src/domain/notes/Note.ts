@@ -31,7 +31,7 @@ class DefaultNote implements Note {
         }
 
         if (!title) {
-            throw new Error('note should contain a tite');
+            throw new Error('note should contain a title');
         }
 
         this.id = id || uuid.v4();
