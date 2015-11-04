@@ -4,7 +4,8 @@
   "description": "Backend for the application of cooperative notes (much original name)",
   "main": "src/main.ts",
   "scripts": {
-    "test": "make test"
+    "test": "./project/scripts/unit-test.sh",
+    "start": "./project/scripts/run.sh"
   },
   "repository": {
     "type": "git",
