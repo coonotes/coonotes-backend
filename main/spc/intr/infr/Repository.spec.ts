@@ -29,6 +29,8 @@ describe("Repository", () => {
             );
         });
 
+
+        // TODO Error: timeout of 2000ms exceeded. Ensure the done() callback is being called in this test.
         it("should throw an error when connecting to an invalid mongodb", (done) => {
             givenAnInvalidMongoConnection(
                 thenItShouldThrowAnException(done)

@@ -14,20 +14,68 @@ describe('User', () => {
     const TestPassword = 'S3CR37';
     // endregion
 
-    describe('email', () => {
-        it('should create new DefaultUser with valid email', () => {
-            const givenAUserWithValidEmail = (cb) => {
-                cb(() => User.CreateNewUser(TestUsername, TestEmail, TestPassword))
-            };
-            const thenItReturnsDefaultUser = (userWithValidMail) => {
-                expect(userWithValidMail).to.not.throw();
+    const givenAUserWithValidData = (cb) => {
+        cb(() => User.CreateNewUser(TestUsername, TestEmail, TestPassword))
+    };
+
+    const givenAUser = (cb) => User.CreateNewUser(TestUsername, TestEmail, TestPassword);
+
+    describe('with valid data', () => {
+        it('should not throw an exception', () => {
+            const thenItNotThrowAnException = (userWithValidData) => {
+                expect(userWithValidData).to.not.throw();
             };
 
-            givenAUserWithValidEmail(
-                thenItReturnsDefaultUser
+            givenAUserWithValidData(
+                thenItNotThrowAnException
+            );
+        });
+    });
+
+    describe ('username', () => {
+        it('should throw an exception with an empty username', () => {
+            const whenUserTryToInsertAnEmptyUsername = (cb) => {
+                cb(() => User.CreateNewUser('', TestEmail, TestPassword))
+            };
+            const thenItShouldThrowAnException = (userWithInvalidEmail) => {
+                expect(userWithInvalidEmail).to.throw('username can not be empty');
+            };
+
+            whenUserTryToInsertAnEmptyUsername(
+                thenItShouldThrowAnException
+            );
+        });
+    });
+
+    describe ('password', () => {
+        it('should throw with an empty password', () => {
+            const whenUserTryToInsertAnEmptyPassword = (cb) => {
+                cb(() => User.CreateNewUser(TestUsername, TestEmail, ''))
+            };
+            const thenItShouldThrowAnException = (userWithEmptyPassword) => {
+                expect(userWithEmptyPassword).to.throw('password can not be empty');
+            };
+
+            whenUserTryToInsertAnEmptyPassword(
+                thenItShouldThrowAnException
             );
         });
 
+        it('should throw if password is less than 4 characters', () => {
+            const whenUserTryToInsertAPasswordWithLessThan4chars = (cb) => {
+                cb(() => User.CreateNewUser(TestUsername, TestEmail, 'abc'))
+            };
+            const thenItShouldThrowAnException = (userWithEmptyPassword) => {
+                expect(userWithEmptyPassword).to.throw('password must be more than 4 characters');
+            };
+
+            whenUserTryToInsertAPasswordWithLessThan4chars(
+                thenItShouldThrowAnException
+            );
+        });
+    });
+
+    describe('email', () => {
         it('should throw an error if email is empty', () => {
             const whenUserTryToInsertAnEmptyEmail = (cb) => {
                 cb(() => User.CreateNewUser(TestUsername, '', TestPassword))
@@ -54,4 +102,27 @@ describe('User', () => {
             );
         });
     });
+
+    describe('dto', () => {
+        it('should return dto of a valid user', () => {
+            const thenItShouldReturnAnObject = (dto) => (user) => expect(user.dto()).to.contain(dto);
+
+            givenAUser(
+                thenItShouldReturnAnObject({ username: TestUsername, email: TestEmail, password: TestPassword })
+            )
+        });
+    });
+
+    //describe('creates note', () => {
+    //    it('should not throw with valid data', () => {
+    //        const whenCreateNewNote = (cb) => (user) => cb(user.createNote('', 'body'));
+    //        const thenItShouldReturnANote = (cb) => expect(cb).to.not.throw;
+    //
+    //        givenAUser(
+    //            whenCreateNewNote(
+    //                thenItShouldReturnANote
+    //            )
+    //        );
+    //    });
+    //});
 });
