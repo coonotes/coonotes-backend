@@ -1,12 +1,7 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
 "use strict";
 
-import * as Q from 'q';
-import * as chai from 'chai';
-
+import {expect} from '../../suite';
 import {SharedConnectionRepository} from '../../../src/infr/Repository';
-
-const expect = chai.expect;
 
 describe("Repository", () => {
     // region preconditions
@@ -14,23 +9,18 @@ describe("Repository", () => {
     const givenAnInvalidMongoConnection = (cb) => cb( SharedConnectionRepository.connect('icannotconnecthere') );
     // endregion
     // region assertions
-    const thenItShouldNotThrowAnException = (done) => async (conn) => {
-        await conn;
-        await SharedConnectionRepository.disconnect();
-        done();
+    const thenItShouldNotThrowAnException = (done) => (conn) => {
+        expect(conn).to.eventually.be.fulfilled.notify(done);
     };
 
-    const thenItShouldThrowAnException = (done) => async (conn) => {
-        try {
-            await conn;
-            done('It did not throw an error');
-        } catch (e) {
-            done();
-        } finally {
-            await SharedConnectionRepository.disconnect();
-        }
+    const thenItShouldThrowAnException = (done) => (conn) => {
+        expect(conn).to.eventually.be.rejected.notify(done);
     };
     // endregion
+
+    afterEach((done) => {
+        SharedConnectionRepository.disconnect().then(done);
+    });
 
     describe("connection", () => {
         it("should connect to a single mongo at localhost", (done) => {

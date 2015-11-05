@@ -1,9 +1,7 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
-import * as chai from 'chai';
+import {expect} from '../../../suite';
 import {Note, CreateNewNote, CreateNote} from '../../../../src/domain/notes/Note';
-
-const expect = chai.expect;
 
 describe('Note', () => {
     // region constants

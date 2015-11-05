@@ -1,7 +1,6 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import * as chai from 'chai';
-const expect = chai.expect;
+import {expect} from '../suite';
 
 describe('Sanity', () => {
     it('true should be true', () => {
