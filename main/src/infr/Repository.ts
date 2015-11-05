@@ -2,17 +2,25 @@
 "use strict";
 
 import {MongoClient, Db, Collection} from "mongodb";
+import * as Q from 'q';
 
-export abstract class Repository {
-    protected abstract collection(name: string): Collection;
+export abstract class Repository<T> {
+    public abstract async drop(): Promise<void>;
+    protected abstract collection(): Collection;
 }
 
-export class SharedConnectionRepository extends Repository {
+export class SharedConnectionRepository<T> extends Repository<T> {
     private static sharedConnection: Db = null;
 
-    public static connect(host?: string, port?: string, database?: string, callback?: (err?: Error) => void): void {
+    constructor(private collectionName: string) {
+        super();
+
+        if (collectionName == null) throw new Error('Invalid Repository with empty collection name');
+    }
+
+    public static async connect(host?: string, port?: string, database?: string): Promise<void> {
         if (SharedConnectionRepository.sharedConnection != null) {
-            return callback();
+            return;
         }
 
         host = host || process.env.MONGODB_HOST || "localhost";
@@ -20,28 +28,21 @@ export class SharedConnectionRepository extends Repository {
         database = database || process.env.MONGODB_DATABASE || "coonotes_dev";
         const connectionUri = "mongodb://" + host + ":" + port + "/" + database;
 
-        MongoClient.connect(connectionUri, (err, db) => {
-            if (err) {
-                return callback(new Error("[FATAL] Could not connect to database: " + connectionUri + ", error: " + err));
-            }
-
-            SharedConnectionRepository.sharedConnection = db;
-            callback();
-        });
+        const db = await Q.nfcall(MongoClient.connect, connectionUri);
+        SharedConnectionRepository.sharedConnection = <Db> db;
     }
 
-    public static disconnect(cb: () => void): void {
+    public static async disconnect(): Promise<void> {
         if (SharedConnectionRepository.sharedConnection != null) {
-            SharedConnectionRepository.sharedConnection.close(true, (err, _) => {
-                SharedConnectionRepository.sharedConnection = null;
-                cb();
-            });
-        } else {
-            cb();
+            await Q.ninvoke(SharedConnectionRepository.sharedConnection, 'close', true).then(_ => SharedConnectionRepository.sharedConnection = null);
         }
     }
 
-    protected collection(name: string): Collection {
-        return SharedConnectionRepository.sharedConnection.collection(name);
+    public async drop(): Promise<void> {
+        return await this.collection().drop();
+    }
+
+    protected collection(): Collection {
+        return SharedConnectionRepository.sharedConnection.collection(this.collectionName);
     }
 }
