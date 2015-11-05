@@ -1,14 +1,20 @@
 /// <reference path="../../../../typings/node-uuid/node-uuid.d.ts" />
 "use strict";
 
+import {Note, CreateNewNote, NoteCreator} from "../notes/Note";
+
 import uuid = require('node-uuid');
-import Note = require('../notes/Note');
 
 export interface User {
     dto(): any
 }
 
-class DefaultUser implements User, Note.NoteCreator {
+function validateEmail(a: string) {
+    const matches = /^([a-zA-Z0-9\-\.]+)@([a-zA-Z0-9\-\.]+)\.[\w]{2,5}$/.exec(a);
+    return matches !== null;
+}
+
+export class DefaultUser implements User, NoteCreator {
     constructor(private id:string,
                 private username:string,
                 private email:string,
@@ -20,7 +26,10 @@ class DefaultUser implements User, Note.NoteCreator {
         if (!email) {
             throw new Error('email can not be empty');
         }
-        // TODO check if email is valid with a regexp
+
+        if(!validateEmail(email)) {
+            throw new Error('email is invalid');
+        }
 
         if (!password) {
             throw new Error('password can not be empty');
@@ -41,10 +50,10 @@ class DefaultUser implements User, Note.NoteCreator {
     }
 
     createNote(title:string, body:string):Note {
-        return new Note.CreateNewNote(this.id, title, body);
+        return CreateNewNote(this.id, title, body);
     }
 }
 
-export function RegisterNewUser(username:string, email:string, password:string) {
+export function CreateNewUser(username:string, email:string, password:string) {
     return new DefaultUser(undefined, username, email, password);
 }
