@@ -18,7 +18,7 @@ describe('User', () => {
         cb(() => User.CreateNewUser(TestUsername, TestEmail, TestPassword))
     };
 
-    const givenAUser = (cb) => User.CreateNewUser(TestUsername, TestEmail, TestPassword);
+    const givenAUser = (cb) => cb(User.CreateNewUser(TestUsername, TestEmail, TestPassword));
 
     describe('with valid data', () => {
         it('should not throw an exception', () => {
@@ -113,16 +113,16 @@ describe('User', () => {
         });
     });
 
-    //describe('creates note', () => {
-    //    it('should not throw with valid data', () => {
-    //        const whenCreateNewNote = (cb) => (user) => cb(user.createNote('', 'body'));
-    //        const thenItShouldReturnANote = (cb) => expect(cb).to.not.throw;
-    //
-    //        givenAUser(
-    //            whenCreateNewNote(
-    //                thenItShouldReturnANote
-    //            )
-    //        );
-    //    });
-    //});
+    describe('creates note', () => {
+        it('should not throw with valid data', () => {
+            const whenCreateNewNote = (cb) => (user) => cb(() => user.createNote('title', 'body'));
+            const thenItShouldReturnANote = (cb) => expect(cb).to.not.throw();
+
+            givenAUser(
+                whenCreateNewNote(
+                    thenItShouldReturnANote
+                )
+            );
+        });
+    });
 });

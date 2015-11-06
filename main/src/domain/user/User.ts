@@ -5,7 +5,7 @@ import {Note, CreateNewNote, NoteCreator} from "../notes/Note";
 
 import uuid = require('node-uuid');
 
-export interface User {
+export interface User extends NoteCreator {
     dto(): any
 }
 
@@ -14,7 +14,7 @@ function validateEmail(a: string) {
     return matches !== null;
 }
 
-export class DefaultUser implements User, NoteCreator {
+export class DefaultUser implements User {
     constructor(private id:string,
                 private username:string,
                 private email:string,
