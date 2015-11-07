@@ -6,7 +6,9 @@
   "scripts": {
     "unit-test": "./project/scripts/unit-test.sh",
     "integration-test": "./project/scripts/integration-test.sh",
-    "start": "./project/scripts/run.sh"
+    "dependencies": "./project/scripts/dependencies.sh",
+    "start": "./project/scripts/run.sh",
+    "clean": "./project/scripts/clean.sh"
   },
   "repository": {
     "type": "git",
