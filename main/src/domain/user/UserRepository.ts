@@ -9,12 +9,18 @@ import * as Q from 'q';
 import { SharedConnectionRepository as Repository } from '../../infr/Repository';
 
 export class UserRepository extends Repository<User> {
-    constructor() {
-        super("users");
+    constructor(collection?: string) {
+        super(collection || "users");
     }
 
-    public async save(user: User): Promise<User> {
+    public async save(user:User):Promise<User> {
         const state = <any> user;
-        return await Q.ninvoke(this.collection(), 'updateOne', { id: state.id, }, state, { upsert: true }).then(() => user);
+        return await Q.ninvoke(this.collection(), 'updateOne', {id: state.id,}, state, {upsert: true}).then(() => user);
+    }
+
+    public findByEmail(email:string):void {
+        Q.ninvoke(this.collection(), "findOne", {email: email}).then((data) => {
+            console.log(data);
+        });
     }
 }
