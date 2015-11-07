@@ -8,9 +8,9 @@ import {UserRepository} from '../../../../src/domain/user/UserRepository';
 describe("UserRepository", () => {
     it("should create a new user", eventually (async () => {
         await SharedConnectionRepository.connect();
-        const note = CreateNewUser("testUser", "valid@email.com", "testPassword");
+        const user = CreateNewUser("testUser", "valid@email.com", "testPassword");
         const repo = new UserRepository();
-        await repo.save(note);
+        await repo.save(user);
         await SharedConnectionRepository.disconnect();
     }));
 });
