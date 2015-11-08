@@ -11,6 +11,12 @@ describe("UserRepository", () => {
         const user = CreateNewUser("testUser", "valid@email.com", "testPassword");
         const repo = new UserRepository();
         await repo.save(user);
+
+        const userExistPromise = repo.findByEmail('valid@test.com');
+
+        userExistPromise.then((user) => {
+            expect(user).to.be.eq(user);
+        });
         await SharedConnectionRepository.disconnect();
     }));
 });

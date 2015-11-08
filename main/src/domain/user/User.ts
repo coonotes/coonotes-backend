@@ -57,3 +57,7 @@ export class DefaultUser implements User {
 export function CreateNewUser(username:string, email:string, password:string) {
     return new DefaultUser(undefined, username, email, password);
 }
+
+export function CreateUser(id: string, username:string, email:string, password:string) {
+    return new DefaultUser(id, username, email, password);
+}
