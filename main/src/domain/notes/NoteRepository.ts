@@ -3,18 +3,17 @@
 
 import {Collection} from "mongodb";
 
-import {Note, CreateNote} from "./Note";
+import {Note, DefaultNote, CreateNote} from "./Note";
 import * as Q from 'q';
 
 import { SharedConnectionRepository as Repository } from '../../infr/Repository';
 
 export class NoteRepository extends Repository<Note> {
-    constructor() {
-        super("notes");
+    constructor(collection?: string) {
+        super(collection || "notes");
     }
 
-    public async save(note: Note): Promise<Note> {
-        const state = <any> note;
-        return await Q.ninvoke(this.collection(), 'updateOne', { id: state.id, }, state, { upsert: true }).then(() => note);
+    public async findById(id: string): Promise<Note> {
+        return await this.findOneGeneric(DefaultNote, {id: id});
     }
 }

@@ -5,10 +5,10 @@ import chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
+export const _ = JSON.stringify;
 export const expect = chai.expect;
 export function eventually(cb: () => Promise<void>) {
     return async (done) => {
-        await cb();
-        done();
+        cb().then(() => done(), done);
     };
 }
