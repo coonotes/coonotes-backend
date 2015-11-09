@@ -1,6 +1,3 @@
-/// <reference path="../../../../../typings/mocha/mocha.d.ts" />
-/// <reference path="../../../../../typings/chai/chai.d.ts" />
-
 import chai = require('chai');
 import User = require('../../../../src/domain/user/User');
 import {DefaultUser} from "../../../../src/domain/user/User";

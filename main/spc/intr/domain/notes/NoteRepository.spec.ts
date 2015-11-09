@@ -1,4 +1,3 @@
-/// <reference path="../../../../../typings/tsd.d.ts" />
 import {eventually, expect, _} from '../../../suite';
 
 import {SharedConnectionRepository} from '../../../../src/infr/Repository';

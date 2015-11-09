@@ -1,5 +1,3 @@
-/// <reference path="../../../../../typings/tsd.d.ts" />
-
 import {expect} from '../../../suite';
 import {Note, CreateNewNote, CreateNote} from '../../../../src/domain/notes/Note';
 

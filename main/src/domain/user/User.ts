@@ -1,4 +1,3 @@
-/// <reference path="../../../../typings/node-uuid/node-uuid.d.ts" />
 "use strict";
 
 import {Note, CreateNewNote, NoteCreator} from "../notes/Note";
