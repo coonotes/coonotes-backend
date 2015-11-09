@@ -15,12 +15,10 @@ router.listen(9898, () => {
     console.log('Running...');
 
     SharedConnectionRepository.connect().then(function() {
+        const user = CreateNewUser("testUser", "valid@email.com", "testPassword");
         const repo = new UserRepository();
-        const test = repo.findByEmail('valid@test.com');
 
-        test.then((user) => {
-            console.log(user);
-        });
+        repo.save(user);
     });
 });
 
