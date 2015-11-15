@@ -11,10 +11,29 @@ function getParamNames(func) {
     return result || [];
 }
 
+export function ValueObject(ofType: Function) {
+    return function (target: any, _: string, parameterIndex: number) {
+        const parameterName = getParamNames(target)[parameterIndex];
+        target.prototype._valueObjects = target.prototype._valueObjects || {};
+        target.prototype._valueObjects[parameterName] = ofType;
+    }
+
+}
+
 export function Entity(target: Function) {
     const params = getParamNames(target);
+    function mapToExpected(param, value) {
+        if (target.prototype._valueObjects && target.prototype._valueObjects[param]) {
+            return target.prototype._valueObjects[param].prototype._constructorForMap(value);
+        }
+        return value;
+    }
+
     target.prototype._constructorForMap = function (map) {
-        var args = params.map(p => map[p]);
+        var args = params.map(p => {
+            return mapToExpected(p, map[p]);
+        });
+
         return new (Function.prototype.bind.apply(target, [{}].concat(args)));
     };
 }
