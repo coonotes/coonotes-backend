@@ -1,4 +1,4 @@
-import {eventually, expect, _} from '../../../suite';
+import {eventually, expect} from '../../../suite';
 
 import {SharedConnectionRepository} from '../../../../src/infr/Repository';
 import {Note, CreateNewNote} from '../../../../src/domain/notes/Note';
