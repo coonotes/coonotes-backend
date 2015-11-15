@@ -19,8 +19,8 @@ describe("NoteRepository", () => {
     });
     // endregion preconditions
     // region steps
-    const whenFindingTheSame = (cb) => async (noteFn) => {
-        const note = await noteFn();
+    const whenFindingTheSame = (cb) => async (noteCreator) => {
+        const note = await noteCreator();
         await cb(async () => {
             return await Repository().findById(note.dto().id)
         }, note);
