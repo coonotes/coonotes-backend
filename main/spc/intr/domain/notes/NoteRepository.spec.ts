@@ -8,13 +8,35 @@ describe("NoteRepository", () => {
     beforeEach(eventually(SharedConnectionRepository.connect));
     afterEach(eventually(SharedConnectionRepository.disconnect));
 
-    it('should do something', eventually (async () => {
+    // region constants
+    const Repository = () => new NoteRepository();
+    // endregion
+    // region preconditions
+    const givenASavedNote = async (cb) => await cb(async () => {
         const note = CreateNewNote("owner", "title", "body");
-        const repo = new NoteRepository();
-        await repo.save(note);
-        const loadedNote = await repo.findById(note.dto().id);
+        await Repository().save(note);
+        return note;
+    });
+    // endregion preconditions
+    // region steps
+    const whenFindingTheSame = (cb) => async (noteFn) => {
+        const note = await noteFn();
+        await cb(async () => {
+            return await Repository().findById(note.dto().id)
+        }, note);
+    };
+    // endregion steps
+    const thenTheyShouldBeIdentical = async (foundNote, note) => {
+        expect(await foundNote()).to.deep.equal(note);
+    };
+    // region assertions
 
-        console.log("on Expect", _(loadedNote), _(note));
-        expect(note).to.contain(loadedNote);
-    }));
+    // endregion assertions
+    it('should find an already saved note', eventually( async () =>
+        await givenASavedNote(
+            whenFindingTheSame(
+                thenTheyShouldBeIdentical
+            )
+        )
+    ));
 });

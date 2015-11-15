@@ -68,7 +68,8 @@ export class SharedConnectionRepository<T> extends Repository<T> {
 
     public static async disconnect(): Promise<void> {
         if (SharedConnectionRepository.sharedConnection != null) {
-            await Q.ninvoke(SharedConnectionRepository.sharedConnection, 'close', true).then(_ => SharedConnectionRepository.sharedConnection = null);
+            await Q.ninvoke(SharedConnectionRepository.sharedConnection, 'close', true);
+            SharedConnectionRepository.sharedConnection = null;
         }
     }
 
@@ -87,6 +88,11 @@ export class SharedConnectionRepository<T> extends Repository<T> {
 
     protected async findOneGeneric(entityClass: Function, query: any): Promise<T> {
         return await Q.ninvoke(this.collection(), 'findOne', query).then(this.buildFromMap(entityClass));
+    }
+
+    protected async findSomeGeneric(entityClass: Function, query: any): Promise<T[]> {
+        var self = this;
+        return await Q.ninvoke(this.collection(), 'find', query).then((p: any[]) => p.map(self.buildFromMap(entityClass)));
     }
 
     protected buildFromMap(entityClass: Function): (map: any) => T {

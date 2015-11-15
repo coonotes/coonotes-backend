@@ -70,5 +70,5 @@ export function CreateNote(id: string, owner: string, title: string, body: strin
 }
 
 export function CreateNewNote(owner: string, title: string, body: string) {
-    return new DefaultNote(undefined, owner, title, body, [], undefined);
+    return new DefaultNote(undefined, owner, title, body, [], null);
 }

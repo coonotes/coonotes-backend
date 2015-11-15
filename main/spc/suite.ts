@@ -10,7 +10,3 @@ export const expect = chai.expect;
 export function eventually(cb: () => Promise<any>) {
     return (done) => cb().then(() => done(), done);
 }
-
-export function future(cb: Promise<any>) {
-    return (done) => cb.then(() => done(), done);
-}

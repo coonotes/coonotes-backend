@@ -1,4 +1,4 @@
-import {expect, future} from '../suite';
+import {expect, eventually} from '../suite';
 
 describe('Sanity', () => {
     // region preconditions
@@ -16,7 +16,7 @@ describe('Sanity', () => {
         );
     });
 
-    it('support asynchronous testing', future(
+    it('support asynchronous testing', eventually( () =>
         givenAnAsyncTrue(
             thenItShouldBeAsyncTrue
         )

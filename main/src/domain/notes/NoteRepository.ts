@@ -1,10 +1,6 @@
 "use strict";
 
-import {Collection} from "mongodb";
-
-import {Note, DefaultNote, CreateNote} from "./Note";
-import * as Q from 'q';
-
+import {Note, DefaultNote} from "./Note";
 import { SharedConnectionRepository as Repository } from '../../infr/Repository';
 
 export class NoteRepository extends Repository<Note> {
