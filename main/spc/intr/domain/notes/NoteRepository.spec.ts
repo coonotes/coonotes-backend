@@ -26,11 +26,10 @@ describe("NoteRepository", () => {
         }, note);
     };
     // endregion steps
+    // region assertions
     const thenTheyShouldBeIdentical = async (foundNote, note) => {
         expect(await foundNote()).to.deep.equal(note);
     };
-    // region assertions
-
     // endregion assertions
     it('should find an already saved note', eventually( async () =>
         await givenASavedNote(
