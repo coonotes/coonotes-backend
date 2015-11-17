@@ -13,7 +13,7 @@ export class NoteRepository extends Repository<Note> {
         return await this.findOneGeneric(DefaultNote, { id : id });
     }
 
-    public async saveBySingle(note: Note): Promise<Note> {
+    public async save(note: Note): Promise<Note> {
         const state = <any> note;
         return await this.upsertOne({ id : { uuid: state.dto().id.uuid } }, note);
     }

@@ -17,13 +17,13 @@ export class Notes {
         return await this.repository.save(note.rename(title));
     }
 
-    public async shareTo(noteId: NoteId, collaborator: string): Promise<Note> {
+    public async share(noteId: NoteId, collaborator: string): Promise<Note> {
         const note = await this.repository.findById(noteId);
         return await this.repository.save(note.share(collaborator));
     }
 
-    public async transferTo(noteId: NoteId, newNoteOwner: string): Promise<Note> {
+    public async transfer(noteId: NoteId, newNoteOwner: string): Promise<Note> {
         const note = await this.repository.findById(noteId);
-        return await this.repository.saveBySingle(note.transfer(newNoteOwner));
+        return await this.repository.save(note.transfer(newNoteOwner));
     }
 }
