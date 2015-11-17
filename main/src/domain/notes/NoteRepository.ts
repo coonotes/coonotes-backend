@@ -1,7 +1,7 @@
 "use strict";
 
-import {NoteId} from "./NoteId";
-import {Note, DefaultNote} from "./Note";
+import { NoteId } from "./NoteId";
+import { Note, DefaultNote } from "./Note";
 import { SharedConnectionRepository as Repository } from '../../infr/Repository';
 
 export class NoteRepository extends Repository<Note> {
