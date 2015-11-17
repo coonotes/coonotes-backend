@@ -10,7 +10,14 @@ export class NoteRepository extends Repository<Note> {
     }
 
     public async findById(id: NoteId): Promise<Note> {
-        return await this.findOneGeneric(DefaultNote, { id : id });
+        return await this.findOneGeneric(DefaultNote,
+          {
+              "$or": [
+                  { "id.uuid": id.single() },
+                  { "id.owner": id.asOwner(), "collaborators": { "$in": [ id.asOwner() ] } }
+              ]
+          }
+        );
     }
 
     public async save(note: Note): Promise<Note> {
@@ -18,3 +25,11 @@ export class NoteRepository extends Repository<Note> {
         return await this.upsertOne({ id : { uuid: state.dto().id.uuid } }, note);
     }
 }
+
+/**
+ db.notes.find(
+ { $or: [
+ { "id.uuid": "f3f430a3-f22f-475f-af54-67be932c9b14" },
+ { "id.owner": "a", "collaborators": { $in: [ "a" ] } }
+ ]}).pretty()
+**/
