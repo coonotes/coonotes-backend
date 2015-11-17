@@ -12,4 +12,9 @@ export class NoteRepository extends Repository<Note> {
     public async findById(id: NoteId): Promise<Note> {
         return await this.findOneGeneric(DefaultNote, { id : id });
     }
+
+    public async saveBySingle(note: Note): Promise<Note> {
+        const state = <any> note;
+        return await Q.ninvoke(this.collection(), 'updateOne', { id : { uuid: state.dto().id.uuid } }, state, { upsert : true }).then(() => note);
+    }
 }
