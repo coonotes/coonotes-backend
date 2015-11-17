@@ -1,0 +1,18 @@
+import { NoteRepository } from './NoteRepository';
+import { Note, NoteCreator } from './Note';
+
+export default class Notes {
+    constructor(private repository: NoteRepository) {
+        this.repository = repository || new NoteRepository();
+    }
+
+    public async create(creator: NoteCreator, title: string, body: string): Promise<Note> {
+        const note = creator.createNote(title, body);
+        return await this.repository.save(note);
+    }
+
+    public async rename(noteId: string, title: string): Promise<Note> {
+        const note = await this.repository.findById(noteId);
+        return await this.repository.save(note.rename(title));
+    }
+}

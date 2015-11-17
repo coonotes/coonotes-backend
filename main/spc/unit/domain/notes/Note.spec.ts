@@ -1,5 +1,6 @@
 import {expect} from '../../../suite';
 import {Note, CreateNewNote, CreateNote} from '../../../../src/domain/notes/Note';
+import { NoteId } from "../../../../src/domain/notes/NoteId";
 
 describe('Note', () => {
     // region constants
@@ -18,12 +19,12 @@ describe('Note', () => {
 
     describe('constraints', () => {
         [
-            { id: null, owner: null, title: 'someTitle', body: null, collaborators: [], permalink: null },
-            { id: null, owner: 'someOwner', title: null, body: null, collaborators: [], permalink: null },
+            { id: null, title: 'someTitle', body: null, collaborators: [], permalink: null },
+            { id: new NoteId("owner"), title: null, body: null, collaborators: [], permalink: null },
         ].forEach((test) => {
             // region steps
             const whenTryingToBuildAnInvalidNote = (cb) => {
-                cb(() => CreateNote(test.id, test.owner, test.title, test.body, test.collaborators, test.permalink))
+                cb(() => CreateNote(test.id, test.title, test.body, test.collaborators, test.permalink))
             };
             // endregion
             // region cases
@@ -66,7 +67,7 @@ describe('Note', () => {
 
         it('should be consistent on a new note', () => {
             givenSomeNote(
-                thenTheDtoShouldMatch({ title: 'title', owner: 'owner', body: 'body' })
+                thenTheDtoShouldMatch({ title: 'title', body: 'body' })
             )
         });
     });
@@ -106,7 +107,7 @@ describe('Note', () => {
 
     describe("sharing a note", () => {
         // region steps
-        const whenSharingTheNoteTo = (toUser, cb) => (note) => cb(note.share(toUser));
+        const whenSharingTheNoteTo = (toUser, cb) => (note) => cb(note.share(Owner, toUser));
         // endregion
         // region assertions
         const thenItShouldContainTheCollaboratorOnce = (collaborator) => {
@@ -156,7 +157,7 @@ describe('Note', () => {
         // region assertions
         const thenTheCollaboratorAndTheOwnerMustSwap = (newOwner, newColl) => (note) => {
             const dto = note.dto();
-            expect(dto.owner).to.equal(newOwner);
+            expect(dto.id.asOwner()).to.equal(newOwner);
             expect(dto.collaborators).to.contain(newColl);
         };
         // endregion
