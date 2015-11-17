@@ -27,7 +27,7 @@ describe('EntityReflection', () => {
     const InvalidMapForValueObject = {a: "aa", b: "some", c: { n: -5} };
     // endregion
     // region preconditions
-    const givenAClass = (cb) => cb(<any> Foo.prototype);
+    const givenAClass = (cb) => cb(<any> Foo);
     // endregion preconditions
     // region steps
     const whenCalledTheMapperWithMap = (map, cb) => (theClass) => cb(() => theClass._constructorForMap(map));
