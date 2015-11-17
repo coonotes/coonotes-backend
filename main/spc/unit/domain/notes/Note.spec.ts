@@ -19,8 +19,8 @@ describe('Note', () => {
 
     describe('constraints', () => {
         [
-            { id: null, title: 'someTitle', body: null, collaborators: [], permalink: null },
-            { id: new NoteId("owner"), title: null, body: null, collaborators: [], permalink: null },
+            {id: null, title: 'someTitle', body: null, collaborators: [], permalink: null},
+            {id: new NoteId("owner"), title: null, body: null, collaborators: [], permalink: null},
         ].forEach((test) => {
             // region steps
             const whenTryingToBuildAnInvalidNote = (cb) => {
@@ -67,7 +67,7 @@ describe('Note', () => {
 
         it('should be consistent on a new note', () => {
             givenSomeNote(
-                thenTheDtoShouldMatch({ title: 'title', body: 'body' })
+                thenTheDtoShouldMatch({title: 'title', body: 'body'})
             )
         });
     });
@@ -77,7 +77,7 @@ describe('Note', () => {
         const whenRenamingTo = (newName, cb) => (note) => cb(note.rename(newName));
         // endregion
         // region assertions
-        const thenItShouldBeNamed = (name) => (note) => expect(note.dto()).to.contain({ title: name });
+        const thenItShouldBeNamed = (name) => (note) => expect(note.dto()).to.contain({title: name});
         // endregion
         it("should contain the new name", () => {
             givenSomeNote(

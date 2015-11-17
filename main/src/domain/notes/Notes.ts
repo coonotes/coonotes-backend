@@ -3,16 +3,16 @@ import { Note, NoteCreator } from './Note';
 import {NoteId} from "./NoteId";
 
 export class Notes {
-    constructor(private repository: NoteRepository) {
+    constructor(private repository:NoteRepository) {
         this.repository = repository || new NoteRepository();
     }
 
-    public async create(creator: NoteCreator, title: string, body: string): Promise<Note> {
+    public async create(creator:NoteCreator, title:string, body:string):Promise<Note> {
         const note = creator.createNote(title, body);
         return await this.repository.save(note);
     }
 
-    public async rename(noteId: NoteId, title: string): Promise<Note> {
+    public async rename(noteId:NoteId, title:string):Promise<Note> {
         const note = await this.repository.findById(noteId);
         return await this.repository.save(note.rename(title));
     }

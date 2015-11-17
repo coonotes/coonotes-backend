@@ -31,7 +31,7 @@ describe("NoteRepository", () => {
         expect(await foundNote()).to.deep.equal(note);
     };
     // endregion assertions
-    it('should find an already saved note', eventually( async () =>
+    it('should find an already saved note', eventually(async () =>
         await givenASavedNote(
             whenFindingTheSame(
                 thenTheyShouldBeIdentical

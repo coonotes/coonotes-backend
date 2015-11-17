@@ -7,6 +7,6 @@ chai.use(chaiAsPromised);
 
 export const _ = JSON.stringify;
 export const expect = chai.expect;
-export function eventually(cb: () => Promise<any>) {
+export function eventually(cb:() => Promise<any>) {
     return (done) => cb().then(() => done(), done);
 }

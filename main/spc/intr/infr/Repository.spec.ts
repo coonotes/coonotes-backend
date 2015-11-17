@@ -7,8 +7,8 @@ describe("Repository", () => {
     const SlowTimeout = 10000;
 
     // region preconditions
-    const givenAMongoConnection = (cb) => cb( SharedConnectionRepository.connect() );
-    const givenAnInvalidMongoConnection = (cb) => cb( SharedConnectionRepository.connect('icannotconnecthere') );
+    const givenAMongoConnection = (cb) => cb(SharedConnectionRepository.connect());
+    const givenAnInvalidMongoConnection = (cb) => cb(SharedConnectionRepository.connect('icannotconnecthere'));
     // endregion
     // region assertions
     const thenItShouldNotThrowAnException = (done) => (conn) => {
@@ -20,7 +20,7 @@ describe("Repository", () => {
     };
     // endregion
 
-    afterEach(eventually ( async () => {
+    afterEach(eventually(async () => {
         await SharedConnectionRepository.disconnect();
     }));
 

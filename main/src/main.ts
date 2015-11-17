@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 router.listen(9898, () => {
     console.log('Running...');
 
-    SharedConnectionRepository.connect().then(function() {
+    SharedConnectionRepository.connect().then(function () {
         const user = CreateNewUser("testUser", "valid@email.com", "testPassword");
         const repo = new UserRepository();
 

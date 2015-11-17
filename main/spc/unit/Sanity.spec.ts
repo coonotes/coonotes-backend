@@ -16,7 +16,7 @@ describe('Sanity', () => {
         );
     });
 
-    it('support asynchronous testing', eventually( () =>
+    it('support asynchronous testing', eventually(() =>
         givenAnAsyncTrue(
             thenItShouldBeAsyncTrue
         )

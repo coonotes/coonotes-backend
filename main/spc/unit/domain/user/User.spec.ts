@@ -29,7 +29,7 @@ describe('User', () => {
         });
     });
 
-    describe ('username', () => {
+    describe('username', () => {
         it('should throw an exception with an empty username', () => {
             const whenUserTryToInsertAnEmptyUsername = (cb) => {
                 cb(() => User.CreateNewUser('', TestEmail, TestPassword))
@@ -44,7 +44,7 @@ describe('User', () => {
         });
     });
 
-    describe ('password', () => {
+    describe('password', () => {
         it('should throw with an empty password', () => {
             const whenUserTryToInsertAnEmptyPassword = (cb) => {
                 cb(() => User.CreateNewUser(TestUsername, TestEmail, ''))
@@ -105,7 +105,7 @@ describe('User', () => {
             const thenItShouldReturnAnObject = (dto) => (user) => expect(user.dto()).to.contain(dto);
 
             givenAUser(
-                thenItShouldReturnAnObject({ username: TestUsername, email: TestEmail, password: TestPassword })
+                thenItShouldReturnAnObject({username: TestUsername, email: TestEmail, password: TestPassword})
             )
         });
     });
