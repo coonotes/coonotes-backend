@@ -1,7 +1,8 @@
 import { NoteRepository } from './NoteRepository';
 import { Note, NoteCreator } from './Note';
+import {NoteId} from "./NoteId";
 
-export default class Notes {
+export class Notes {
     constructor(private repository: NoteRepository) {
         this.repository = repository || new NoteRepository();
     }
@@ -11,7 +12,7 @@ export default class Notes {
         return await this.repository.save(note);
     }
 
-    public async rename(noteId: string, title: string): Promise<Note> {
+    public async rename(noteId: NoteId, title: string): Promise<Note> {
         const note = await this.repository.findById(noteId);
         return await this.repository.save(note.rename(title));
     }
