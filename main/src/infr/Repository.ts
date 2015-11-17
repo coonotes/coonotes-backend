@@ -85,7 +85,7 @@ export class SharedConnectionRepository<T> extends Repository<T> {
 
     public async save(object: T): Promise<T> {
         const state = <any> object;
-        return this.upsertOne({ id: state.id }, object);
+        return this.upsertOne({ id : state.id }, object);
     }
 
     protected async upsertOne(query: any, object: any) {
