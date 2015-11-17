@@ -12,9 +12,10 @@ export class NoteRepository extends Repository<Note> {
     public async findById(id: NoteId): Promise<Note> {
         return await this.findOneGeneric(DefaultNote,
           {
+              "id.uuid": id.single(),
               "$or": [
-                  { "id.uuid": id.single() },
-                  { "id.owner": id.asOwner(), "collaborators": { "$in": [ id.asOwner() ] } }
+                  { "id.owner": id.asOwner() },
+                  {"collaborators": { "$in": [ id.asOwner() ] } }
               ]
           }
         );
