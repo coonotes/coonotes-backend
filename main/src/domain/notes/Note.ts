@@ -1,10 +1,10 @@
 "use strict";
 
-import { NoteId } from "./NoteId";
+import { NoteId, NoteIdCreator } from "./NoteId";
 import uuid = require('node-uuid');
 import {Entity, ValueObject} from '../../infr/Repository';
 
-export interface NoteCreator {
+export interface NoteCreator extends NoteIdCreator {
     createNote(title: string, body: string): Note
 }
 

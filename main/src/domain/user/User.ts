@@ -1,6 +1,7 @@
 "use strict";
 
 import {Note, CreateNewNote, NoteCreator} from "../notes/Note";
+import {NoteId} from "../notes/NoteId";
 
 import uuid = require('node-uuid');
 // var bcrypt = require('bcrypt');
@@ -54,7 +55,11 @@ export class DefaultUser implements User {
     }
 
     createNote(title: string, body: string): Note {
-        return CreateNewNote(this.id, title, body);
+        return CreateNewNote(this.email, title, body);
+    }
+
+    createNoteId(uuid?: string): NoteId {
+        return new NoteId(this.email, uuid);
     }
 
     rename(newName: string): DefaultUser {
