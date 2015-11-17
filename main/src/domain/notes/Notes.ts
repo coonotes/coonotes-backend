@@ -1,6 +1,6 @@
 import { NoteRepository } from './NoteRepository';
 import { Note, NoteCreator } from './Note';
-import {NoteId} from "./NoteId";
+import { NoteId } from "./NoteId";
 
 export class Notes {
     constructor(private repository:NoteRepository) {
