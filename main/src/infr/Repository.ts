@@ -85,8 +85,12 @@ export class SharedConnectionRepository<T> extends Repository<T> {
 
     public async save(object: T): Promise<T> {
         const state = <any> object;
-        return await Q.ninvoke(this.collection(), 'updateOne', { id : state.id, }, state, { upsert : true }).then(() => object);
+        return this.upsertOne({ id: state.id }, object);
     }
+
+    protected async upsertOne(query: any, object: any) {
+        return await Q.ninvoke(this.collection(), 'updateOne', query, object, { upsert : true }).then(() => object);
+    };
 
     protected async findOneGeneric(entityClass: Function, query: any): Promise<T> {
         return await Q.ninvoke(this.collection(), 'findOne', query).then(this.buildFromMap(entityClass));

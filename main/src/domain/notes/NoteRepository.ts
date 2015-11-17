@@ -15,6 +15,6 @@ export class NoteRepository extends Repository<Note> {
 
     public async saveBySingle(note: Note): Promise<Note> {
         const state = <any> note;
-        return await Q.ninvoke(this.collection(), 'updateOne', { id : { uuid: state.dto().id.uuid } }, state, { upsert : true }).then(() => note);
+        return await this.upsertOne({ id : { uuid: state.dto().id.uuid } }, note);
     }
 }
