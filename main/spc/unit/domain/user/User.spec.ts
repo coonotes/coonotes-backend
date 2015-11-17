@@ -7,7 +7,7 @@ var expect = chai.expect;
 describe('User', () => {
     // region constants
     const TestUsername = 'someone';
-    const TestEmail = 'a@b.com';
+    const TestEmail    = 'a@b.com';
     const TestPassword = 'S3CR37';
     // endregion
 
@@ -24,7 +24,7 @@ describe('User', () => {
             };
 
             givenAUserWithValidData(
-                thenItNotThrowAnException
+              thenItNotThrowAnException
             );
         });
     });
@@ -34,12 +34,12 @@ describe('User', () => {
             const whenUserTryToInsertAnEmptyUsername = (cb) => {
                 cb(() => User.CreateNewUser('', TestEmail, TestPassword))
             };
-            const thenItShouldThrowAnException = (userWithInvalidEmail) => {
+            const thenItShouldThrowAnException       = (userWithInvalidEmail) => {
                 expect(userWithInvalidEmail).to.throw('username can not be empty');
             };
 
             whenUserTryToInsertAnEmptyUsername(
-                thenItShouldThrowAnException
+              thenItShouldThrowAnException
             );
         });
     });
@@ -49,12 +49,12 @@ describe('User', () => {
             const whenUserTryToInsertAnEmptyPassword = (cb) => {
                 cb(() => User.CreateNewUser(TestUsername, TestEmail, ''))
             };
-            const thenItShouldThrowAnException = (userWithEmptyPassword) => {
+            const thenItShouldThrowAnException       = (userWithEmptyPassword) => {
                 expect(userWithEmptyPassword).to.throw('password can not be empty');
             };
 
             whenUserTryToInsertAnEmptyPassword(
-                thenItShouldThrowAnException
+              thenItShouldThrowAnException
             );
         });
 
@@ -62,12 +62,12 @@ describe('User', () => {
             const whenUserTryToInsertAPasswordWithLessThan4chars = (cb) => {
                 cb(() => User.CreateNewUser(TestUsername, TestEmail, 'abc'))
             };
-            const thenItShouldThrowAnException = (userWithEmptyPassword) => {
+            const thenItShouldThrowAnException                   = (userWithEmptyPassword) => {
                 expect(userWithEmptyPassword).to.throw('password must be more than 4 characters');
             };
 
             whenUserTryToInsertAPasswordWithLessThan4chars(
-                thenItShouldThrowAnException
+              thenItShouldThrowAnException
             );
         });
     });
@@ -77,12 +77,12 @@ describe('User', () => {
             const whenUserTryToInsertAnEmptyEmail = (cb) => {
                 cb(() => User.CreateNewUser(TestUsername, '', TestPassword))
             };
-            const thenItShouldThrowAnException = (userWithInvalidEmail) => {
+            const thenItShouldThrowAnException    = (userWithInvalidEmail) => {
                 expect(userWithInvalidEmail).to.throw('email can not be empty');
             };
 
             whenUserTryToInsertAnEmptyEmail(
-                thenItShouldThrowAnException
+              thenItShouldThrowAnException
             );
         });
 
@@ -90,12 +90,12 @@ describe('User', () => {
             const whenUserTryToInsertAnInvalidEmail = (cb) => {
                 cb(() => User.CreateNewUser(TestUsername, 'invalidMail', TestPassword))
             };
-            const thenItShouldThrowAnException = (userWithInvalidEmail) => {
+            const thenItShouldThrowAnException      = (userWithInvalidEmail) => {
                 expect(userWithInvalidEmail).to.throw('email is invalid');
             };
 
             whenUserTryToInsertAnInvalidEmail(
-                thenItShouldThrowAnException
+              thenItShouldThrowAnException
             );
         });
     });
@@ -105,20 +105,20 @@ describe('User', () => {
             const thenItShouldReturnAnObject = (dto) => (user) => expect(user.dto()).to.contain(dto);
 
             givenAUser(
-                thenItShouldReturnAnObject({username: TestUsername, email: TestEmail, password: TestPassword})
+              thenItShouldReturnAnObject({ username : TestUsername, email : TestEmail, password : TestPassword })
             )
         });
     });
 
     describe('creates note', () => {
         it('should not throw with valid data', () => {
-            const whenCreateNewNote = (cb) => (user) => cb(() => user.createNote('title', 'body'));
+            const whenCreateNewNote       = (cb) => (user) => cb(() => user.createNote('title', 'body'));
             const thenItShouldReturnANote = (cb) => expect(cb).to.not.throw();
 
             givenAUser(
-                whenCreateNewNote(
-                    thenItShouldReturnANote
-                )
+              whenCreateNewNote(
+                thenItShouldReturnANote
+              )
             );
         });
     });

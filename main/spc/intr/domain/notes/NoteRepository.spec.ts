@@ -32,10 +32,10 @@ describe("NoteRepository", () => {
     };
     // endregion assertions
     it('should find an already saved note', eventually(async () =>
-        await givenASavedNote(
-            whenFindingTheSame(
-                thenTheyShouldBeIdentical
-            )
+      await givenASavedNote(
+        whenFindingTheSame(
+          thenTheyShouldBeIdentical
         )
+      )
     ));
 });

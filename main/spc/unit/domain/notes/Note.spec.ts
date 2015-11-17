@@ -5,22 +5,22 @@ import { NoteId } from "../../../../src/domain/notes/NoteId";
 describe('Note', () => {
     // region constants
     const PredefinedUser = 'someone';
-    const Owner = 'owner';
-    const SomeNoteName = 'someNewTitle';
-    const SomeNoteBody = 'SomeBodyToLove';
+    const Owner          = 'owner';
+    const SomeNoteName   = 'someNewTitle';
+    const SomeNoteBody   = 'SomeBodyToLove';
     // endregion
     // region exercises
     const exerciseRandomNote = () => CreateNewNote(Owner, 'title', 'body');
     // endregion
     // region preconditions
-    const givenSomeNote = (cb) => cb(exerciseRandomNote());
+    const givenSomeNote      = (cb) => cb(exerciseRandomNote());
     const givenASharedNoteTo = (toUser, cb) => cb(exerciseRandomNote().share(toUser));
     // endregion
 
     describe('constraints', () => {
         [
-            {id: null, title: 'someTitle', body: null, collaborators: [], permalink: null},
-            {id: new NoteId("owner"), title: null, body: null, collaborators: [], permalink: null},
+            { id : null, title : 'someTitle', body : null, collaborators : [], permalink : null },
+            { id : new NoteId("owner"), title : null, body : null, collaborators : [], permalink : null },
         ].forEach((test) => {
             // region steps
             const whenTryingToBuildAnInvalidNote = (cb) => {
@@ -36,7 +36,7 @@ describe('Note', () => {
             describe(JSON.stringify(test), () => {
                 it('should throw an error', () => {
                     whenTryingToBuildAnInvalidNote(
-                        thenItShouldThrowAnException
+                      thenItShouldThrowAnException
                     );
                 });
             });
@@ -55,7 +55,7 @@ describe('Note', () => {
 
         it("two notes should not have the same id", () => {
             givenTwoNotes(
-                thenTheyShouldContainDifferentIds
+              thenTheyShouldContainDifferentIds
             );
         });
     });
@@ -67,7 +67,7 @@ describe('Note', () => {
 
         it('should be consistent on a new note', () => {
             givenSomeNote(
-                thenTheDtoShouldMatch({title: 'title', body: 'body'})
+              thenTheDtoShouldMatch({ title : 'title', body : 'body' })
             )
         });
     });
@@ -77,13 +77,13 @@ describe('Note', () => {
         const whenRenamingTo = (newName, cb) => (note) => cb(note.rename(newName));
         // endregion
         // region assertions
-        const thenItShouldBeNamed = (name) => (note) => expect(note.dto()).to.contain({title: name});
+        const thenItShouldBeNamed = (name) => (note) => expect(note.dto()).to.contain({ title : name });
         // endregion
         it("should contain the new name", () => {
             givenSomeNote(
-                whenRenamingTo(SomeNoteName,
-                    thenItShouldBeNamed(SomeNoteName)
-                )
+              whenRenamingTo(SomeNoteName,
+                thenItShouldBeNamed(SomeNoteName)
+              )
             );
         });
     });
@@ -98,9 +98,9 @@ describe('Note', () => {
 
         it('should contain the new body', () => {
             givenSomeNote(
-                whenUpdatingTheBodyTo(SomeNoteBody,
-                    thenTheBodyShouldBe(SomeNoteBody)
-                )
+              whenUpdatingTheBodyTo(SomeNoteBody,
+                thenTheBodyShouldBe(SomeNoteBody)
+              )
             );
         });
     });
@@ -111,11 +111,11 @@ describe('Note', () => {
         // endregion
         // region assertions
         const thenItShouldContainTheCollaboratorOnce = (collaborator) => {
-            return (note) => expect(note.dto().collaborators).to.deep.equal([collaborator]);
+            return (note) => expect(note.dto().collaborators).to.deep.equal([ collaborator ]);
         };
 
         const thenItShouldNotContainTheCollaborator = (collaborator) => {
-            return (note) => expect(note.dto().collaborators).to.not.contain([collaborator]);
+            return (note) => expect(note.dto().collaborators).to.not.contain([ collaborator ]);
         };
 
         const thenItShouldContainAPermalink = (note) => expect(note.dto().permalink).to.not.equal(null);
@@ -123,29 +123,29 @@ describe('Note', () => {
 
         it('should contain a new collaborator', () => {
             givenASharedNoteTo(PredefinedUser,
-                thenItShouldContainTheCollaboratorOnce(PredefinedUser)
+              thenItShouldContainTheCollaboratorOnce(PredefinedUser)
             );
         });
 
         it('should contain a permalink', () => {
             givenASharedNoteTo(PredefinedUser,
-                thenItShouldContainAPermalink
+              thenItShouldContainAPermalink
             );
         });
 
         it('should not share again to the same person', () => {
             givenASharedNoteTo(PredefinedUser,
-                whenSharingTheNoteTo(PredefinedUser,
-                    thenItShouldContainTheCollaboratorOnce(PredefinedUser)
-                )
+              whenSharingTheNoteTo(PredefinedUser,
+                thenItShouldContainTheCollaboratorOnce(PredefinedUser)
+              )
             );
         });
 
         it('should not share to the owner of the note', () => {
             givenASharedNoteTo(PredefinedUser,
-                whenSharingTheNoteTo(Owner,
-                    thenItShouldNotContainTheCollaborator(Owner)
-                )
+              whenSharingTheNoteTo(Owner,
+                thenItShouldNotContainTheCollaborator(Owner)
+              )
             );
         });
     });
@@ -163,9 +163,9 @@ describe('Note', () => {
         // endregion
         it('should swap the collaborator and the new owner', () => {
             givenASharedNoteTo(PredefinedUser,
-                whenTransferingTheNoteTo(PredefinedUser,
-                    thenTheCollaboratorAndTheOwnerMustSwap(PredefinedUser, Owner)
-                )
+              whenTransferingTheNoteTo(PredefinedUser,
+                thenTheCollaboratorAndTheOwnerMustSwap(PredefinedUser, Owner)
+              )
             )
         });
     });

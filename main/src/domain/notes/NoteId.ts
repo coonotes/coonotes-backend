@@ -5,7 +5,7 @@ import { Entity } from '../../infr/Repository';
 
 @Entity
 export class NoteId {
-    constructor(private owner:string, private uuid?:string) {
+    constructor(private owner: string, private uuid?: string) {
         if (owner == null || owner.trim() === "") {
             throw "owner must not be empty!";
         }
@@ -13,7 +13,7 @@ export class NoteId {
         this.uuid = uuid || uuidGenerator.v4();
     }
 
-    own(owner:string):NoteId {
+    own(owner: string): NoteId {
         return new NoteId(owner, this.uuid);
     }
 
@@ -21,7 +21,7 @@ export class NoteId {
         return this.owner;
     }
 
-    single():string {
+    single(): string {
         return this.uuid;
     }
 }

@@ -7,7 +7,7 @@ describe("Repository", () => {
     const SlowTimeout = 10000;
 
     // region preconditions
-    const givenAMongoConnection = (cb) => cb(SharedConnectionRepository.connect());
+    const givenAMongoConnection         = (cb) => cb(SharedConnectionRepository.connect());
     const givenAnInvalidMongoConnection = (cb) => cb(SharedConnectionRepository.connect('icannotconnecthere'));
     // endregion
     // region assertions
@@ -27,7 +27,7 @@ describe("Repository", () => {
     describe("connection", () => {
         it("should connect to a single mongo at localhost", (done) => {
             givenAMongoConnection(
-                thenItShouldNotThrowAnException(done)
+              thenItShouldNotThrowAnException(done)
             );
         });
 
@@ -35,7 +35,7 @@ describe("Repository", () => {
         it("should throw an error when connecting to an invalid mongodb (slow)", function (done) {
             this.timeout(SlowTimeout);
             givenAnInvalidMongoConnection(
-                thenItShouldThrowAnException(done)
+              thenItShouldThrowAnException(done)
             );
         });
     });
