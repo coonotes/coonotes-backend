@@ -2,6 +2,7 @@
 
 import {Note, CreateNewNote, NoteCreator} from "../notes/Note";
 import {NoteId} from "../notes/NoteId";
+import {Entity, ValueObject} from '../../infr/Repository';
 
 import uuid = require('node-uuid');
 // var bcrypt = require('bcrypt');
@@ -15,6 +16,7 @@ function validateEmail(email: string) {
     return matches !== null;
 }
 
+@Entity
 export class DefaultUser implements User {
     constructor(private id: string,
                 private username: string,

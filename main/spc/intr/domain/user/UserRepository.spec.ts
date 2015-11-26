@@ -5,11 +5,11 @@ import {User, CreateNewUser} from '../../../../src/domain/user/User';
 import {UserRepository} from '../../../../src/domain/user/UserRepository';
 
 describe("UserRepository", () => {
-    const repo = new UserRepository();
+    const Repository = () => new UserRepository();
 
     beforeEach(eventually(async () => {
         await SharedConnectionRepository.connect();
-        await repo.drop();
+        await Repository().drop();
     }));
 
     afterEach(eventually(SharedConnectionRepository.disconnect));
@@ -17,18 +17,27 @@ describe("UserRepository", () => {
     it("should create a new user", (async () => {
         const user = CreateNewUser("testUser", "valid@email.com", "testPassword");
 
-        await repo.save(user);
+        await Repository().save(user);
 
-        await expect(repo.findByEmail('valid@email.com')).to.eventually.deep.equal(user);
+        await expect(Repository().findByEmail('valid@email.com')).to.eventually.deep.equal(user);
     }));
 
     it("should update username", (async () => {
         var user = CreateNewUser("testUser", "valid@email.com", "testPassword");
-        await repo.save(user);
+        await Repository().save(user);
 
-        user = user.rename("newTestUser");
-        await repo.save(user);
+        var renamedUser = user.rename("newTestUser");
+        var newUser = await Repository().save(renamedUser);
 
-        await expect(repo.findByEmail("valid@email.com")).to.eventually.have.property('username', 'newTestUser');
+        expect(newUser).to.have.property('username', 'newTestUser');
+    }));
+
+    it("should find user by email", (async () => {
+        var user = CreateNewUser("testUser", "valid@email.com", "testPassword");
+        await Repository().save(user);
+
+        var findedUser = await Repository().findByEmail("valid@email.com");
+
+        expect(findedUser).to.deep.equal(user);
     }));
 });
