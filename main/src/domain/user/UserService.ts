@@ -10,7 +10,7 @@ export class UserService {
     }
 
     public async create(username:string, email:string, password:string): Promise<DefaultUser> {
-        if(this.repository.findByEmail(email)) {
+        if(await this.repository.findByEmail(email)) {
             throw new UserAlreadyExistException(email);
         }
 

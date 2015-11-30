@@ -1,4 +1,4 @@
-"user strict";
+"use strict";
 
 export class UserException extends Error {
     constructor(message?:string) {

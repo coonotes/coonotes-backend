@@ -76,7 +76,7 @@ export class SharedConnectionRepository<T> extends Repository<T> {
     }
 
     public async drop(): Promise<void> {
-        return await Q.ninvoke(this.collection(), 'drop').then(() => {}, () => {});
+        return await Q.ninvoke(this.collection(), 'drop').then(() => {}, (error) => console.warn(error));
     }
 
     protected collection(): Collection {
@@ -103,6 +103,6 @@ export class SharedConnectionRepository<T> extends Repository<T> {
 
     protected buildFromMap(entityClass: Function): (map: any) => T {
         const free = <any> entityClass;
-        return (map) => <T> free._constructorForMap(map);
+        return (map) => { if (map != null) return <T> free._constructorForMap(map) }
     }
 }
