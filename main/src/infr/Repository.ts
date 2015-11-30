@@ -76,7 +76,7 @@ export class SharedConnectionRepository<T> extends Repository<T> {
     }
 
     public async drop(): Promise<void> {
-        return await this.collection().drop();
+        return await Q.ninvoke(this.collection(), 'drop').then(() => {}, () => {});
     }
 
     protected collection(): Collection {
