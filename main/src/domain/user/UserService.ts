@@ -1,5 +1,6 @@
 "use strict";
 
+import {UserAlreadyExistException} from "./UserException"
 import {User, CreateNewUser, DefaultUser} from "./User";
 import {UserRepository} from "./UserRepository";
 
@@ -10,7 +11,7 @@ export class UserService {
 
     public async create(username:string, email:string, password:string): Promise<DefaultUser> {
         if(this.repository.findByEmail(email)) {
-            return null;
+            throw new UserAlreadyExistException(email);
         }
 
         const user = CreateNewUser(username, email, password);
