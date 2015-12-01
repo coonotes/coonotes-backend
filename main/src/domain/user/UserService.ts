@@ -1,7 +1,10 @@
 "use strict";
 
+import {UserDoesNotExistException} from "./UserException";
 import {UserAlreadyExistException} from "./UserException"
-import {User, CreateNewUser, DefaultUser} from "./User";
+import {User} from "./User";
+import {DefaultUser} from "./User";
+import {CreateNewUser} from "./User";
 import {UserRepository} from "./UserRepository";
 
 export class UserService {
@@ -14,7 +17,18 @@ export class UserService {
             throw new UserAlreadyExistException(email);
         }
 
-        const user = CreateNewUser(username, email, password);
+        let user = CreateNewUser(username, email, password);
         return await this.repository.save(user);
+    }
+
+    public async rename(newName:string, email:string): Promise<DefaultUser> {
+        let user = await this.repository.findByEmail(email);
+        if(!user) {
+            throw new UserDoesNotExistException(email);
+        }
+
+        let renamedUser = user.rename(newName);
+
+        return await this.repository.save(renamedUser);
     }
 }

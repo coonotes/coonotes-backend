@@ -27,6 +27,7 @@
     "gobble": "^0.10.2",
     "gobble-cli": "^0.6.0",
     "gobble-typescript": "^0.1.1",
+    "istanbul": "^0.4.1",
     "mocha": "^2.3.3",
     "tsd": "^0.6.5",
     "typescript": "^1.6.2",

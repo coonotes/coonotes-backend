@@ -8,7 +8,8 @@ import uuid = require('node-uuid');
 // var bcrypt = require('bcrypt');
 
 export interface User extends NoteCreator {
-    dto(): any
+    dto(): any,
+    rename(string): User
 }
 
 function validateEmail(email: string) {

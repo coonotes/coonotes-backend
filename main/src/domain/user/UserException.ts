@@ -12,3 +12,9 @@ export class UserAlreadyExistException extends UserException {
         super("Email " + email + " already exists.")
     }
 }
+
+export class UserDoesNotExistException extends UserException {
+    constructor(private email: string) {
+        super("Email " + email + " does not exists.")
+    }
+}

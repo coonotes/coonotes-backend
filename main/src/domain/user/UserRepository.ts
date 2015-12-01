@@ -14,7 +14,7 @@ export class UserRepository extends Repository<User> {
 
     public async save(user: User): Promise<User> {
         const state = <any> user;
-        return await this.upsertOne({ id : { uuid : state.dto().id } }, user);
+        return await this.upsertOne({ id : state.dto().id  }, user);
     }
 
     public async findByEmail(email: string): Promise<User> {
