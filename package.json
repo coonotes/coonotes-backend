@@ -22,19 +22,20 @@
   },
   "homepage": "https://github.com/kmruiz/coonotes-backend#readme",
   "devDependencies": {
-    "chai": "^3.4.0",
+    "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
     "gobble": "^0.10.2",
     "gobble-cli": "^0.6.0",
-    "gobble-typescript": "^0.1.1",
+    "gobble-typescript": "^0.1.2",
     "istanbul": "^0.4.1",
-    "mocha": "^2.3.3",
+    "mocha": "^2.3.4",
     "tsd": "^0.6.5",
     "typescript": "^1.6.2",
     "typescript-require": "^0.2.9"
   },
   "dependencies": {
     "express": "^4.13.3",
+    "kerberos": "0.0.17",
     "mongodb": "^2.0.47",
     "node-uuid": "^1.4.3",
     "q": "^1.4.1"

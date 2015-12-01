@@ -6,8 +6,8 @@ module.exports = function (module) {
         gobble(module).transform('typescript', {
             noImplicitAny: false,
             sourceMap: true,
-            target: ts.ScriptTarget.ES6,
-            module: ts.ModuleKind.CommonJS,
+            target: "ES6",
+            module: "CommonJS",
             removeComments: false,
             typescript: ts,
             experimentalDecorators: true
